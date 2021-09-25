@@ -26,7 +26,8 @@
 // 　　group : 「まとめて開く/閉じる」ボタンの設置
 // 　　groupend : まとめ操作の終端となる行の指定
 // 仕様は GamersWiki(https://jpngamerswiki.com)の acプラグインを参考にしています。
-
+// 
+// 2021/09/25 test
 
 
 
