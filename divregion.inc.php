@@ -2,7 +2,7 @@
 /////////////////////////////////////////////////
 // PukiWiki - Yet another WikiWikiWeb clone.
 //
-// $Id: divregion.inc.php,v 1.2 2021.Sep.
+// $Id: divregion.inc.php,v 1.3 2021.Sep.
 //
 // H.Tomose
 // region.inc.php を参考に作成。
@@ -26,8 +26,12 @@
 // 　　group : 「まとめて開く/閉じる」ボタンの設置
 // 　　groupend : まとめ操作の終端となる行の指定
 // 仕様は GamersWiki(https://jpngamerswiki.com)の acプラグインを参考にしています。
-// 
-// 2021/09/25 test
+//----
+// Ver1.3では、マルチライン引数に対応。
+// #divregion(折り畳みタイトル){{
+// 本文
+// }}
+// ・・・という形式をサポートします。この場合、#enddivregion 指定はしないでください。
 
 
 
@@ -39,9 +43,30 @@ function plugin_divregion_convert()
 	// static で宣言してしまったので２回目呼ばれたとき、前の情報が残っていて変な動作になるので初期化。
 	$builder->setDefaultSettings();
 
+	$lastparam="";
+
 	// 引数が指定されているようなので解析
 	if (func_num_args() >= 1){
 		$args = func_get_args();
+
+		// マルチライン引数==本文も引数になっている可能性のチェック。
+		$lastparam = array_pop($args);
+		$tgtcontent = str_replace(array("\r\n","\r","\n"), "\n", $lastparam);
+		$tgtcontent = explode("\n",$tgtcontent);
+
+		if( count($tgtcontent)>1 ){
+			// 改行がない場合、それが本文。特に何もせず、パラメータとして保持しておく。
+		}else{
+			// 改行がある場合、本文はパラメータ外なのでプラグイン内では無視する。
+			//array_push($args,$lastparam);
+			array_push($args,$lastparam);
+			$lastparam="";
+		}
+	}
+
+	if (func_num_args() >= 1){
+//		$args = func_get_args();
+
 		$builder->setDescription( array_shift($args) );
 		foreach( $args as $value ){
 			// opened が指定されたら初期表示は開いた状態に設定
@@ -82,7 +107,7 @@ function plugin_divregion_convert()
 		}
 	}
 	// ＨＴＭＬ返却
-	return $builder->build();
+	return $builder->build($lastparam);
 } 
 
 
@@ -149,7 +174,7 @@ class DivRegionPluginHTMLBuilder
 	function setGroupEnd(){ $this->isgroupend = true; }
 
 
-	function build(){
+	function build($contents){
 		$html = array();
 		if( $this->callcount == 0 ) {
 			//最初の呼び出しのときのみ、スクリプトを挿入
@@ -159,6 +184,12 @@ class DivRegionPluginHTMLBuilder
 		// 以降、ＨＴＭＬ作成処理
 		array_push( $html, $this->buildSummaryHtml() );
 		array_push( $html, $this->buildContentHtml() );
+
+		if( strcmp($contents,"") !=0 ){
+			array_push( $html, convert_html($contents) );
+			array_push( $html, "</div>" );
+		}
+
 		return join($html);
 	}
 
