@@ -2,83 +2,105 @@
 /////////////////////////////////////////////////
 // PukiWiki - Yet another WikiWikiWeb clone.
 //
-// $Id: divregion.inc.php,v 1.3 2021.Sep.
-//
-// H.Tomose
-// region.inc.php ¤ò»²¹Í¤ËºîÀ®¡£
-// Table¤ò»È¤Ã¤Æ¤¤¤¿ Region ¤ò¥¢¥ì¥ó¥¸¤·¡¢
-// <div> ¤Ç¼Â¸½¤¹¤ë¡£
+// $Id: divregion.inc.php,v 1.5 2026.Sep.17. Haruka.Tomose
+// region.inc.php ã‚’å‚è€ƒã«ä½œæˆã€‚
+// Tableã‚’ä½¿ã£ã¦ã„ãŸ Region ã‚’ã‚¢ãƒ¬ãƒ³ã‚¸ã—ã€
+// <div> ã§å®Ÿç¾ã™ã‚‹ã€‚
 // 
-// ½ñ¼°¤ÏÊÌÅÓcss ¤ÇÄêµÁ¤¹¤ë¤³¤È¡£É¬Í×¤Ê¤â¤Î¤Ï°Ê²¼¡§
-//div.divregion{ É¸½à¤Ç¤Î¥Ø¥Ã¥À¹Ô
-//div.divregion_contents{ É¸½à¤Ç¤ÎËÜÊ¸ÉôÊ¬
-// div.divregion_h1{ h1»ØÄê»ş¤Î¥Ø¥Ã¥À¹Ô
-//div.divregion_h2{ h2»ØÄê»ş¤Î¥Ø¥Ã¥À¹Ô
+// æ›¸å¼ã¯åˆ¥é€”css ã§å®šç¾©ã™ã‚‹ã“ã¨ã€‚å¿…è¦ãªã‚‚ã®ã¯ä»¥ä¸‹ï¼š
+//div.divregion{ æ¨™æº–ã§ã®ãƒ˜ãƒƒãƒ€è¡Œ
+//div.divregion_contents{ æ¨™æº–ã§ã®æœ¬æ–‡éƒ¨åˆ†
+// div.divregion_h1{ h1æŒ‡å®šæ™‚ã®ãƒ˜ãƒƒãƒ€è¡Œ
+//div.divregion_h2{ h2æŒ‡å®šæ™‚ã®ãƒ˜ãƒƒãƒ€è¡Œ
 //
 //----
-// Ver1.1 ¤Ç¤Ï¡¢¥¹¥¿¥¤¥ë»ØÄê¤ò³ÈÄ¥¤·¤Ş¤·¤¿¡£
-// ¡¦h1,h2 °Ê³°¤Î¥¹¥¿¥¤¥ë¤ò»ØÄê¤Ç¤­¤ë¤è¤¦¤Ë¡£
-//   divregion_xxx,divregion_h1_xxx ¤ò»öÁ°ÄêµÁ¤·¤Æ¤ª¤¤¤Æ¡¢
-//   ¾åµ­xxx ÉôÊ¬¤òÊ¸»úÎó»ØÄê¤Ç¤­¤ë¤è¤¦¤Ë¤·¤Ş¤·¤¿¡£
-// ¡¦body ÉôÊ¬¤ÎÊ¸»ú¿§¡¦ÇØ·Ê¿§¤ò»ØÄê¤Ç¤­¤ë¤è¤¦¤Ë¤·¤Ş¤·¤¿¡£
+// Ver1.1 ã§ã¯ã€ã‚¹ã‚¿ã‚¤ãƒ«æŒ‡å®šã‚’æ‹¡å¼µã—ã¾ã—ãŸã€‚
+// ãƒ»h1,h2 ä»¥å¤–ã®ã‚¹ã‚¿ã‚¤ãƒ«ã‚’æŒ‡å®šã§ãã‚‹ã‚ˆã†ã«ã€‚
+//   divregion_xxx,divregion_h1_xxx ã‚’äº‹å‰å®šç¾©ã—ã¦ãŠã„ã¦ã€
+//   ä¸Šè¨˜xxx éƒ¨åˆ†ã‚’æ–‡å­—åˆ—æŒ‡å®šã§ãã‚‹ã‚ˆã†ã«ã—ã¾ã—ãŸã€‚
+// ãƒ»body éƒ¨åˆ†ã®æ–‡å­—è‰²ãƒ»èƒŒæ™¯è‰²ã‚’æŒ‡å®šã§ãã‚‹ã‚ˆã†ã«ã—ã¾ã—ãŸã€‚
 //----
-// Ver1.2 ¤Ç¤Ï¡¢¡Ö¤Ş¤È¤á¤Æ³«¤¯/ÊÄ¤¸¤ë¡×¤¿¤á¤Î¿·¥ª¥×¥·¥ç¥ó¤ò¥µ¥İ¡¼¥È¡£
-// ¡¡¡¡group : ¡Ö¤Ş¤È¤á¤Æ³«¤¯/ÊÄ¤¸¤ë¡×¥Ü¥¿¥ó¤ÎÀßÃÖ
-// ¡¡¡¡groupend : ¤Ş¤È¤áÁàºî¤Î½ªÃ¼¤È¤Ê¤ë¹Ô¤Î»ØÄê
-// »ÅÍÍ¤Ï GamersWiki(https://jpngamerswiki.com)¤Î ac¥×¥é¥°¥¤¥ó¤ò»²¹Í¤Ë¤·¤Æ¤¤¤Ş¤¹¡£
+// Ver1.2 ã§ã¯ã€ã€Œã¾ã¨ã‚ã¦é–‹ã/é–‰ã˜ã‚‹ã€ãŸã‚ã®æ–°ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’ã‚µãƒãƒ¼ãƒˆã€‚
+// ã€€ã€€group : ã€Œã¾ã¨ã‚ã¦é–‹ã/é–‰ã˜ã‚‹ã€ãƒœã‚¿ãƒ³ã®è¨­ç½®
+// ã€€ã€€groupend : ã¾ã¨ã‚æ“ä½œã®çµ‚ç«¯ã¨ãªã‚‹è¡Œã®æŒ‡å®š
+// ä»•æ§˜ã¯ GamersWiki(https://jpngamerswiki.com)ã® acãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã‚’å‚è€ƒã«ã—ã¦ã„ã¾ã™ã€‚
 //----
-// Ver1.3¤Ç¤Ï¡¢¥Ş¥ë¥Á¥é¥¤¥ó°ú¿ô¤ËÂĞ±ş¡£
-// #divregion(ÀŞ¤ê¾ö¤ß¥¿¥¤¥È¥ë){{
-// ËÜÊ¸
+// Ver1.3
+//	ãƒ»ãƒãƒ«ãƒãƒ©ã‚¤ãƒ³å¼•æ•°ã«å¯¾å¿œã€‚
+// #divregion(æŠ˜ã‚Šç•³ã¿ã‚¿ã‚¤ãƒˆãƒ«){{
+// æœ¬æ–‡
 // }}
-// ¡¦¡¦¡¦¤È¤¤¤¦·Á¼°¤ò¥µ¥İ¡¼¥È¤·¤Ş¤¹¡£¤³¤Î¾ì¹ç¡¢#enddivregion »ØÄê¤Ï¤·¤Ê¤¤¤Ç¤¯¤À¤µ¤¤¡£
-
+// ãƒ»ãƒ»ãƒ»ã¨ã„ã†å½¢å¼ã‚’ã‚µãƒãƒ¼ãƒˆã—ã¾ã™ã€‚ã“ã®å ´åˆã€#enddivregion æŒ‡å®šã¯ã—ãªã„ã§ãã ã•ã„ã€‚
+//	ãƒ»æŠ˜ã‚Šç•³ã¿ã®å…ˆé ­ãƒãƒ¼ã‚«ãƒ¼ã®æŒ‡å®šã‚’å®¹æ˜“ã«ã€‚
+// Ver1.4
+//  ã‚³ãƒ³ãƒ†ãƒ³ãƒ„éƒ¨åˆ†ã‚’ã€Œéš ã™ã€æ‰‹æ®µã‚’ã€Œdisplay:blockã€ã‹ã‚‰ã€Œhidden='until-found'ã€å½¢å¼ã«å¤‰æ›´ã€‚
+//
+// Ver 1.5
+// enddivregionã¨ã®çµ„ã¿åˆã‚ã›ç”¨ã®ã€Œçµ‚äº†ã‚¿ã‚°ä½œæˆç”¨ãƒ¡ã‚½ãƒƒãƒ‰ã€ã‚’ä½œæˆã€‚
+// ã“ã‚Œã«ã‚ˆã‚Šã€Œé–‰ã˜ã™ã/é–‹ãã™ãã€ã®ãƒã‚§ãƒƒã‚¯ã‚’ç ´ç¶»ãªãè¡Œãˆã‚‹ã‚ˆã†ã«ã™ã‚‹
+//
+// Ver 1.51
+//  æœ¬æ–‡éƒ¨åˆ†ã«å¯¾ã™ã‚‹ colorç³»æŒ‡å®šãŒå‹•ä½œã—ãªããªã£ã¦ã„ãŸãƒã‚°ä¿®æ­£
+//  colorç³»æŒ‡å®šã«ãŠã„ã¦è‰²åç§°ã§ã®æŒ‡å®šã«å¯¾å¿œ
 
 
 function plugin_divregion_convert()
 {
+	global $plugin_divregion_divnotclosed;
+
+	if (!isset($plugin_divregion_divnotclosed)) {
+		$plugin_divregion_divnotclosed = 0;
+	}
+	
 	static $builder = 0;
 	if( $builder==0 ) $builder = new DivRegionPluginHTMLBuilder();
-
-	// static ¤ÇÀë¸À¤·¤Æ¤·¤Ş¤Ã¤¿¤Î¤Ç£²²óÌÜ¸Æ¤Ğ¤ì¤¿¤È¤­¡¢Á°¤Î¾ğÊó¤¬»Ä¤Ã¤Æ¤¤¤ÆÊÑ¤ÊÆ°ºî¤Ë¤Ê¤ë¤Î¤Ç½é´ü²½¡£
+	// static ã§å®£è¨€ã—ã¦ã—ã¾ã£ãŸã®ã§ï¼’å›ç›®å‘¼ã°ã‚ŒãŸã¨ãã€å‰ã®æƒ…å ±ãŒæ®‹ã£ã¦ã„ã¦å¤‰ãªå‹•ä½œã«ãªã‚‹ã®ã§åˆæœŸåŒ–ã€‚
 	$builder->setDefaultSettings();
 
 	$lastparam="";
 
-	// °ú¿ô¤¬»ØÄê¤µ¤ì¤Æ¤¤¤ë¤è¤¦¤Ê¤Î¤Ç²òÀÏ
+	// å¼•æ•°ãŒæŒ‡å®šã•ã‚Œã¦ã„ã‚‹ã‚ˆã†ãªã®ã§è§£æ
 	if (func_num_args() >= 1){
 		$args = func_get_args();
 
-		// ¥Ş¥ë¥Á¥é¥¤¥ó°ú¿ô==ËÜÊ¸¤â°ú¿ô¤Ë¤Ê¤Ã¤Æ¤¤¤ë²ÄÇ½À­¤Î¥Á¥§¥Ã¥¯¡£
+		// ãƒãƒ«ãƒãƒ©ã‚¤ãƒ³å¼•æ•°==æœ¬æ–‡ã‚‚å¼•æ•°ã«ãªã£ã¦ã„ã‚‹å¯èƒ½æ€§ã®ãƒã‚§ãƒƒã‚¯ã€‚
+		// æœ€å¾Œã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã—æ”¹è¡Œã‚³ãƒ¼ãƒ‰ã§åˆ†å‰²ã§ãã‚‹ã‹ã§åˆ¤æ–­ã€‚
 		$lastparam = array_pop($args);
 		$tgtcontent = str_replace(array("\r\n","\r","\n"), "\n", $lastparam);
 		$tgtcontent = explode("\n",$tgtcontent);
 
 		if( count($tgtcontent)>1 ){
-			// ²ş¹Ô¤¬¤Ê¤¤¾ì¹ç¡¢¤½¤ì¤¬ËÜÊ¸¡£ÆÃ¤Ë²¿¤â¤»¤º¡¢¥Ñ¥é¥á¡¼¥¿¤È¤·¤ÆÊİ»ı¤·¤Æ¤ª¤¯¡£
+			// æ”¹è¡ŒãŒã‚ã‚‹==æœ€çµ‚ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŒã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã€‚
+			// ã€$lastparam ã«ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚’æ®‹ã—ã¦ãŠã
+			//tomoseDBG("multiline.");
 		}else{
-			// ²ş¹Ô¤¬¤¢¤ë¾ì¹ç¡¢ËÜÊ¸¤Ï¥Ñ¥é¥á¡¼¥¿³°¤Ê¤Î¤Ç¥×¥é¥°¥¤¥óÆâ¤Ç¤ÏÌµ»ë¤¹¤ë¡£
-			//array_push($args,$lastparam);
+			// æ”¹è¡ŒãŒãªã„å ´åˆã€æœ¬æ–‡ã¯ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å¤–ã€‚
+			// ãƒã‚§ãƒƒã‚¯ã—ã¦ã„ãŸæœ€çµ‚ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å…ƒã«æˆ»ã™ã€‚
 			array_push($args,$lastparam);
 			$lastparam="";
+			// divã‚¿ã‚°ä½œæˆã™ã‚‹ã®ã§ã‚«ã‚¦ãƒ³ãƒˆã—ã¦ãŠã
+			$plugin_divregion_divnotclosed +=1;
+			//tomoseDBG("opened.");
 		}
 	}
+	
+
 
 	if (func_num_args() >= 1){
 //		$args = func_get_args();
 
 		$builder->setDescription( array_shift($args) );
 		foreach( $args as $value ){
-			// opened ¤¬»ØÄê¤µ¤ì¤¿¤é½é´üÉ½¼¨¤Ï³«¤¤¤¿¾õÂÖ¤ËÀßÄê
+			// opened ãŒæŒ‡å®šã•ã‚ŒãŸã‚‰åˆæœŸè¡¨ç¤ºã¯é–‹ã„ãŸçŠ¶æ…‹ã«è¨­å®š
 			if( preg_match("/^open/i", $value) ){
 				$builder->setOpened();
-			// closed ¤¬»ØÄê¤µ¤ì¤¿¤é½é´üÉ½¼¨¤ÏÊÄ¤¸¤¿¾õÂÖ¤ËÀßÄê¡£
+			// closed ãŒæŒ‡å®šã•ã‚ŒãŸã‚‰åˆæœŸè¡¨ç¤ºã¯é–‰ã˜ãŸçŠ¶æ…‹ã«è¨­å®šã€‚
 			}elseif( preg_match("/^close/i", $value) ){
 				$builder->setClosed();
-			// h1 ¤¬»ØÄê¤µ¤ì¤¿¤é¡¢¤Ù¤¿¤Ì¤ê¤Ø¤Ã¤É
+			// h1 ãŒæŒ‡å®šã•ã‚ŒãŸã‚‰ã€ã¹ãŸã¬ã‚Šã¸ã£ã©
 			}elseif( preg_match("/^h1/i", $value) ){
 				$builder->setH1();
-			// h2 ¤¬»ØÄê¤µ¤ì¤¿¤é¡¢¥¢¥ó¥À¡¼¥Ğ¡¼¤Ø¤Ã¤É
+			// h2 ãŒæŒ‡å®šã•ã‚ŒãŸã‚‰ã€ã‚¢ãƒ³ãƒ€ãƒ¼ãƒãƒ¼ã¸ã£ã©
 			}elseif( preg_match("/^h2/i", $value) ){
 				$builder->setH2();
 			}elseif( preg_match("/^hstyle:([0-9a-zA-Z]*)/i", $value,$match) ){
@@ -89,37 +111,46 @@ function plugin_divregion_convert()
 			}elseif( preg_match("/^gstyle:([0-9a-zA-Z]*)/i", $value,$match) ){
 				$builder->setGCSS($match[1]);
 
-			}elseif( preg_match("/^color:(#[0-9a-fA-F]*)/i", $value,$match) ){
+			}elseif( preg_match("/^color:(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z-]{1,20})/i", $value,$match) ){
 				$builder->AddCSS( $value);
-			}elseif( preg_match("/^background-color:(#[0-9a-fA-F]*)/i", $value,$match) ){
+			}elseif( preg_match("/^background-color:(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z-]{1,20})/i", $value,$match) ){
 				$builder->AddCSS( 'background-color:'.$match[1]);
-			}elseif( preg_match("/^content-color:(#[0-9a-fA-F]*)/i", $value,$match) ){
+			}elseif( preg_match("/^content-color:(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z-]{1,20})/i", $value,$match) ){
 				$builder->AddBodyCSS( 'color:'.$match[1]);
-			}elseif( preg_match("/^content-bgcolor:(#[0-9a-fA-F]*)/i", $value,$match) ){
+			}elseif( preg_match("/^content-bgcolor:(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z-]{1,20})/i", $value,$match) ){
 				$builder->AddBodyCSS( 'background-color:'.$match[1]);
 			}elseif( preg_match("/^groupend/i", $value) ){
 				$builder->setGroupEnd();
+				// groupç®¡ç†ç”¨ãªã®ã§ã€ã€Œenddivregionã¯ä¸è¦ã€
+				$plugin_divregion_divnotclosed -=1;
 			}elseif( preg_match("/^group/i", $value) ){
 				$builder->setGroup();
+				// groupç®¡ç†ç”¨ãªã®ã§ã€ã€Œenddivregionã¯ä¸è¦ã€
+				$plugin_divregion_divnotclosed -=1;
 			}
 
 
 		}
 	}
-	// £È£Ô£Í£ÌÊÖµÑ
+	
+	
+	// ï¼¨ï¼´ï¼­ï¼¬è¿”å´
 	return $builder->build($lastparam);
 } 
 
 
-// ¥¯¥é¥¹¤Îºî¤êÊı¢Íhttp://php.s3.to/man/language.oop.object-comparison-php4.html
+// ã‚¯ãƒ©ã‚¹ã®ä½œã‚Šæ–¹â‡’http://php.s3.to/man/language.oop.object-comparison-php4.html
 class DivRegionPluginHTMLBuilder
 {
 	var $description;
-	var $headchar;
+	var $headchar_opened;
+	var $headchar_closed;
 	var $isopened;
 	var $isgroup;
 	var $isgroupend;
 	var $scriptVarName;
+	var $hiddenstyle;
+
 
 	var $borderstyle;
 	var $headerstyle;
@@ -129,8 +160,8 @@ class DivRegionPluginHTMLBuilder
 	var $contentclass;
 	var $groupclass;
 
-	//¢­ build¥á¥½¥Ã¥É¤ò¸Æ¤ó¤À²ó¿ô¤ò¥«¥¦¥ó¥È¤¹¤ë¡£
-	//¢­ ¤³¤ì¤Ï¡¢¤³¤Î¥×¥é¥°¥¤¥ó¤¬À¸À®¤¹¤ëJavaScriptÆâ¤Ç¥æ¥Ë¡¼¥¯¤ÊÊÑ¿ôÌ¾¡ÊÈï¤é¤Ê¤¤ÊÑ¿ôÌ¾¡Ë¤òÀ¸À®¤¹¤ë¤¿¤á¤Ë»È¤¤¤Ş¤¹
+	//â†“ buildãƒ¡ã‚½ãƒƒãƒ‰ã‚’å‘¼ã‚“ã å›æ•°ã‚’ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹ã€‚
+	//â†“ ã“ã‚Œã¯ã€ã“ã®ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ãŒç”Ÿæˆã™ã‚‹JavaScriptå†…ã§ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªå¤‰æ•°åï¼ˆè¢«ã‚‰ãªã„å¤‰æ•°åï¼‰ã‚’ç”Ÿæˆã™ã‚‹ãŸã‚ã«ä½¿ã„ã¾ã™
 	var $callcount;
 
 	function DivRegionPluginHTMLBuilder() {
@@ -139,11 +170,14 @@ class DivRegionPluginHTMLBuilder
 	}
 	function setDefaultSettings(){
 		$this->description = "...";
-		$this->headchar = "¢§";
+		$this->headchar_opened = "â–¼";
+		//$this->headchar_closed = "â–²";
+		$this->headchar_closed = "<div style='transform:rotate(270deg);'>â–¼</div>";
 
 		$this->isopened = false;
 		$this->isgroup = false;
 		$this->isgroupend = false;
+		$this->hiddenstyle = "";
 
 		$this->headerstyle = 'cursor:pointer;'; 
 		$this->borderstyle = ''; 
@@ -163,10 +197,10 @@ class DivRegionPluginHTMLBuilder
 
 	function AddCSS($foo){ $this->headerstyle .= $foo.';'; }
 	function AddBodyCSS($foo){ $this->borderstyle .= $foo.';'; }
-	// convert_html()¤ò»È¤Ã¤Æ¡¢³µÍ×¤ÎÉôÊ¬¤Ë¥Ö¥é¥ó¥±¥Ã¥È¥Í¡¼¥à¤ò»È¤¨¤ë¤è¤¦¤Ë²şÎÉ¡£
+	// convert_html()ã‚’ä½¿ã£ã¦ã€æ¦‚è¦ã®éƒ¨åˆ†ã«ãƒ–ãƒ©ãƒ³ã‚±ãƒƒãƒˆãƒãƒ¼ãƒ ã‚’ä½¿ãˆã‚‹ã‚ˆã†ã«æ”¹è‰¯ã€‚
 	function setDescription($description){
 		$this->description = convert_html($description);
-		// convert_html¤ò»È¤¦¤È <p>¥¿¥°¤Ç°Ï¤Ş¤ì¤Æ¤·¤Ş¤¦¡£Mozzila¤À¤ÈÉ½¼¨¤¬¤º¤ì¤ë¤Î¤Ç<p>¥¿¥°¤ò¾Ã¤¹¡£
+		// convert_htmlã‚’ä½¿ã†ã¨ <p>ã‚¿ã‚°ã§å›²ã¾ã‚Œã¦ã—ã¾ã†ã€‚Mozzilaã ã¨è¡¨ç¤ºãŒãšã‚Œã‚‹ã®ã§<p>ã‚¿ã‚°ã‚’æ¶ˆã™ã€‚
 		$this->description = preg_replace( "/^<p>/i", "", $this->description);
 		$this->description = preg_replace( "/<\/p>$/i", "", $this->description);
 	}
@@ -177,13 +211,14 @@ class DivRegionPluginHTMLBuilder
 	function build($contents){
 		$html = array();
 		if( $this->callcount == 0 ) {
-			//ºÇ½é¤Î¸Æ¤Ó½Ğ¤·¤Î¤È¤­¤Î¤ß¡¢¥¹¥¯¥ê¥×¥È¤òÁŞÆş
+			//æœ€åˆã®å‘¼ã³å‡ºã—ã®ã¨ãã®ã¿ã€ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’æŒ¿å…¥
 			array_push( $html, $this->buildScripts() );
 		}
 		$this->callcount++;
-		// °Ê¹ß¡¢£È£Ô£Í£ÌºîÀ®½èÍı
+		// ä»¥é™ã€ï¼¨ï¼´ï¼­ï¼¬ä½œæˆå‡¦ç†
 		array_push( $html, $this->buildSummaryHtml() );
 		array_push( $html, $this->buildContentHtml() );
+
 
 		if( strcmp($contents,"") !=0 ){
 			array_push( $html, convert_html($contents) );
@@ -193,15 +228,40 @@ class DivRegionPluginHTMLBuilder
 		return join($html);
 	}
 
-	// ¢£ 1ÅÙ¤Î¤ß¸Æ¤Ğ¤ì¤ë¥¹¥¯¥ê¥×¥ÈÍÑ¡£
+	// â–  1åº¦ã®ã¿å‘¼ã°ã‚Œã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆç”¨ã€‚
 	function buildScripts(){
 		return <<<EOD
 <script>
+
+
+const celements = document.querySelectorAll('.divregion_contents');
+
+// ãƒ«ãƒ¼ãƒ—å‡¦ç†ã§1ã¤ãšã¤ã‚¤ãƒ™ãƒ³ãƒˆãƒªã‚¹ãƒŠãƒ¼ã‚’ç™»éŒ²
+celements.forEach(element => {
+	element.addEventListener('beforematch', (event) => {
+		divregeion_beforematch(event);
+	});
+});
+
+function divregeion_beforematch(tgtelement){
+	n=tgtelement.target.id.replace("drgn_content", "");
+	document.getElementById('drgn_summaryV'+n).style.display='flex';
+	document.getElementById('drgn_summary'+n).style.display='none';
+
+}
+
+function divregion_contentsearched(id){
+	//æ¤œç´¢ç­‰ã§æŠ˜ã‚Šç•³ã¿ãŒç›´æ¥é–‹ã‹ã‚ŒãŸã‚±ãƒ¼ã‚¹ã€‚
+	//ç¾çŠ¶ã†ã¾ããƒˆãƒªã‚¬ãƒ¼ã•ã‚Œãªã„ã®ã§ã€ä¸€æ™‚ä¿ç•™ã€‚
+	n=id;
+}
+
 function divregion_opentgt(id){
 	n=id;
 	if(document.getElementById('drgn_summary'+n)!=null){
-		document.getElementById('drgn_content'+n).style.display='block';
-		document.getElementById('drgn_summaryV'+n).style.display='block';
+		//document.getElementById('drgn_content'+n).style.display='block';
+		document.getElementById('drgn_content'+n).removeAttribute('hidden');
+		document.getElementById('drgn_summaryV'+n).style.display='flex';
 		document.getElementById('drgn_summary'+n).style.display='none';
 	} 
 }
@@ -209,9 +269,10 @@ function divregion_opentgt(id){
 function divregion_closetgt(id){
 	n=id;
 	if(document.getElementById('drgn_summary'+n)!=null){
-		document.getElementById('drgn_content'+n).style.display='none';
+		//document.getElementById('drgn_content'+n).style.display='none';
+		document.getElementById('drgn_content'+n).setAttribute('hidden','until-found');
 		document.getElementById('drgn_summaryV'+n).style.display='none';
-		document.getElementById('drgn_summary'+n).style.display='block';
+		document.getElementById('drgn_summary'+n).style.display='flex';
 	} 
 }
 
@@ -249,20 +310,21 @@ EOD;
 
 	}
 
-	// ¢£ ¥Ø¥Ã¥ÀÉôÊ¬¤ÎÉ½¼¨ÆâÍÆ¡£³«ÊÄ£²¤Ä¤Îdiv¤ò´Ş¤à¡£
+	// â–  ãƒ˜ãƒƒãƒ€éƒ¨åˆ†ã®è¡¨ç¤ºå†…å®¹ã€‚é–‹é–‰ï¼’ã¤ã®divã‚’å«ã‚€ã€‚
 	function buildSummaryHtml(){
 
 		$summarystyle = ($this->isopened) ? 
 			$this->headerstyle."display:none;" : 
-			$this->headerstyle."display:block;";
+			$this->headerstyle."display:flex;";
 		$summarystyle2 = ($this->isopened) ? 
-			$this->headerstyle."display:block;":
+			$this->headerstyle."display:flex;":
 			$this->headerstyle."display:none;" ;
 
+			
 		$retstr = <<<EOD
-<div class='$this->divclass' id='drgn_summary$this->callcount' data-mode='contents' style="$summarystyle" onclick='divregion_opentgt($this->callcount)'>¢§$this->description
+<div class='$this->divclass' id='drgn_summary$this->callcount' data-mode='contents' style="$summarystyle" onclick='divregion_opentgt($this->callcount)'>$this->headchar_closed$this->description
 </div>
-<div class='$this->divclass' id='drgn_summaryV$this->callcount' style="$summarystyle2" onclick='divregion_closetgt($this->callcount)'>¢¥$this->description
+<div class='$this->divclass' id='drgn_summaryV$this->callcount' style="$summarystyle2" onclick='divregion_closetgt($this->callcount)'>$this->headchar_opened$this->description
 </div>
 EOD;
 
@@ -270,10 +332,10 @@ EOD;
 
 		$retstr = <<<EOD
 <div class='$this->groupclass' id='drgn_summary$this->callcount' style="display:block;" onclick='divregion_groupact($this->callcount,0)' data-mode='group'>
-<span class='$this->groupclass'>[$this->description]¤ò¤Ş¤È¤á¤Æ³«¤¯</span>
+<span class='$this->groupclass'>[$this->description]ã‚’ã¾ã¨ã‚ã¦é–‹ã</span>
 </div>
 <div class='$this->groupclass' id='drgn_summaryV$this->callcount' style="display:none;" onclick='divregion_groupact($this->callcount,1)'>
-<span class='$this->groupclass'>[$this->description]¤ò¤Ş¤È¤á¤ÆÊÄ¤¸¤ë</span>
+<span class='$this->groupclass'>[$this->description]ã‚’ã¾ã¨ã‚ã¦é–‰ã˜ã‚‹</span>
 </div>
 EOD;
 		}
@@ -289,18 +351,16 @@ EOD;
 
 	}
 
-	// ¢£ Å¸³«É½¼¨¤·¤Æ¤¤¤ë¤È¤­¤ÎÉ½¼¨ÆâÍÆÉôÊ¬¡£¤³¤³¤Î</div>¤ÎÊÄ¤¸¥¿¥°¤Ï endregion Â¦¤Ë¤¢¤ë¡£
+	// â–  å±•é–‹è¡¨ç¤ºã—ã¦ã„ã‚‹ã¨ãã®è¡¨ç¤ºå†…å®¹éƒ¨åˆ†ã€‚ã“ã“ã®</div>ã®é–‰ã˜ã‚¿ã‚°ã¯ endregion å´ã«ã‚ã‚‹ã€‚
 	function buildContentHtml(){
-		// ¤¿¤À¤·¡¢¥°¥ë¡¼¥×·Ï»ØÄê¤Ç¤Ï²¿¤âÉ½¼¨¤·¤Ê¤¤¡£
+		// ãŸã ã—ã€ã‚°ãƒ«ãƒ¼ãƒ—ç³»æŒ‡å®šã§ã¯ä½•ã‚‚è¡¨ç¤ºã—ãªã„ã€‚
 		if ($this->isgroup ) return "";
 		if ($this->isgroupend ) return "";
 
-		$contentstyle = ($this->isopened) ? 
-			$this->borderstyle."display:block;" : 
-			$this->borderstyle."display:none;";
-
+		$this->hiddenstyle = ($this->isopened) ? "":"hidden='until-found'";
+			
 		$retstr = <<<EOD
-<div class='$this->contentclass' id='drgn_content$this->callcount' style="$contentstyle">
+<div class='$this->contentclass' id='drgn_content$this->callcount' $this->hiddenstyle style="$this->borderstyle">
 EOD;
 
 		return $retstr;
@@ -308,5 +368,37 @@ EOD;
 //valign='top' 
 
 }// end class RegionPluginHTMLBuilder
+
+
+function plugin_divregion_getendtag($mode='')
+{
+	
+	global $plugin_divregion_divnotclosed;
+	$ret="";
+	
+	if($mode=="clear"){
+		// å¼·åˆ¶å…¨ã‚¯ãƒ­ãƒ¼ã‚ºãƒ¢ãƒ¼ãƒ‰ã€‚
+		if($plugin_divregion_divnotclosed >1){
+			$ret = str_repeat("</div>",$plugin_divregion_divnotclosed);
+			$ret .= "alert: too few #enddivregion: ".($plugin_divregion_divnotclosed-1);
+			$plugin_divregion_divnotclosed=0;
+		}else if($plugin_divregion_divnotclosed ==1){
+			$ret="</div>";
+		}	
+	}
+	else if($plugin_divregion_divnotclosed >0){
+		$plugin_divregion_divnotclosed -=1;
+		//tomoseDBG("closed.");
+		$ret="</div>";
+	}else{
+		//tomoseDBG("too much enddivregion.");
+		$ret= "alert: too much #enddivregion.\n";	
+	}
+	
+
+	return 	$ret;
+
+	
+}
 
 ?>
